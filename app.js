@@ -10,21 +10,16 @@ function appendFilePromise(fileName, str) {
 }
 
 // thenで次々と処理を渡す形式ではループ処理は不可なので少しでも同期がずれると変な出力となる
-for (let count = 0; count < 500; count++) {
-  appendFilePromise(fileName, 'あ')
-    .then(() => {
-      return appendFilePromise(fileName, 'い');
-    })
-    .then(() => {
-      return appendFilePromise(fileName, 'う');
-    })
-    .then(() => {
-      return appendFilePromise(fileName, 'え');
-    })
-    .then(() => {
-      return appendFilePromise(fileName, 'お');
-    })
-    .then(() => {
-      return appendFilePromise(fileName, '\n');
-    });
+// async functionで非同期処理を定義 awaitで処理が順々につながるようになる
+async function main() {
+  for (let count = 0; count < 500; count++) {
+    await appendFilePromise(fileName, 'あ');
+    await appendFilePromise(fileName, 'い');
+    await appendFilePromise(fileName, 'う');
+    await appendFilePromise(fileName, 'え');
+    await appendFilePromise(fileName, 'お');
+    await appendFilePromise(fileName, '\n');
+  }
 }
+
+main()
